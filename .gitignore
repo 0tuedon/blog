@@ -1,0 +1,11 @@
+#Node_Modules Directory Not Neccessary
+node_modules/
+
+#Package-lock file Not Necessary
+package-lock.json
+
+
+#App.edge 
+
+app.edge
+
