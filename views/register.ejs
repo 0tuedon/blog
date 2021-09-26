@@ -1,4 +1,6 @@
 <%- include('./layouts/header.ejs') %> 
+
+
 <!-- Page Header -->
 <header class="masthead">
     <div class="overlay"></div>
@@ -6,7 +8,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>Create New Post</h1>
+            <h1>Create A New Account</h1>
           </div>
         </div>
       </div>
@@ -16,19 +18,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <form action="/post/store" method="POST" enctype="multipart/form-data">
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Title</label>
-              <input type="text" name="title" placeholder="Title" class="form-control">
-            </div>
-          </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Description</label>
-              <input type="text" name="description" placeholder="Description" class="form-control">
-            </div>
-          </div>
+        <form action="/users/register" method="POST" encType="multipart/form-data">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username</label>
@@ -37,21 +27,23 @@
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Content</label>
-              <textarea name="content" placeholder="Content ..." cols="30" rows="10" class="form-control"></textarea>
+              <label>Email</label>
+              <input type="email" name="email" placeholder="Email" class="form-control">
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
-              <label>Image</label>
-              <input type="file" name="image" placeholder="Upload Image" class="form-control-file" required>
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Password" class="form-control">
             </div>
           </div>
+        
           <div class="form-group my-4 text-center">
-            <button class="btn btn-primary">Create Post</button>
+            <button class="btn btn-primary">Register now</button>
           </div>
         </form>
       </div>
     </div>
-  </div>
-  <%- include('layouts/footer.ejs') %> 
+  </div
+
+  <%- include('./layouts/footer.ejs') %> 

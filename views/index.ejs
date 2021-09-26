@@ -29,11 +29,20 @@
                       </h3>
                     </a>
                     <p class="post-meta">Posted by
-                      <a href="#">Start Bootstrap</a> on
+                        <% if(post.username){ %> 
+
+                            <a href="#"><em><%=post.username.toUpperCase()%></em></a>
+                            <%=post.date.toLocaleDateString()  %> at <%= post.date.toLocaleTimeString() %>  </p>
+                            </div>
+                        <% } else { %>
+                       on
                       <%=post.date.toLocaleDateString()  %> at <%= post.date.toLocaleTimeString() %>  </p>
                   </div>
+                  <% } %> 
+                  
                   <hr>
-            <% }) %>
+                  <%})%>
+            
          
          
           <!-- Pager -->
