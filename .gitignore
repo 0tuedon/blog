@@ -8,4 +8,5 @@ package-lock.json
 #App.edge 
 
 app.edge
-
+#Ignore .env file
+.env
