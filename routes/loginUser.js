@@ -17,7 +17,7 @@ User.findOne({
         catch(error){
                 reject(error);
         }
-        resolve(res.redirect('/auth/login')
+        resolve(res.redirect('/auth/login'))
     }else{
         bcrypt.compare(password, user.password, (error,same)=>{
             console.log(password , user.password);
