@@ -1,5 +1,8 @@
+require('dotenv').config();
+
 const   path                        =   require('path'),
         expressEdge                 =   require('express-edge'),
+        { MongoClient }             =   require('mongodb'),
         express                     =   require('express'),
         mongoose                    =   require('mongoose'),
         bodyParser                  =   require('body-parser'),
@@ -10,11 +13,10 @@ const   path                        =   require('path'),
         expressSession              =   require('express-session'),
         MongoStore                  =   require('connect-mongo'),
         app                         =   express(),
-
-        port                        =   process.env.PORT || 4000
+        port                        =   process.env.PORT 
 
 // Connection of Mongoose to the server
-let         severMongoose           =   process.env.DATABASE || 'mongodb://localhost/emutBlog';
+let         severMongoose           =   process.env.DATABASE 
 mongoose.connect(severMongoose, {useNewUrlParser:true})
     .then(()=> 'You are Now Connected to Mongo')
     .catch(err=> console.error('There was an Error SomeWhere' , err))
@@ -27,7 +29,7 @@ app.use(expressSession({
     secret:'jnjrefnj',
     resave:false,
     saveUninitialized:true,
-    store: MongoStore.create({mongoUrl:'mongodb://localhost/emutBlog'})
+    store: MongoStore.create({mongoUrl:severMongoose})
 }))
 app.use(bodyParser.urlencoded({
     extended:true
