@@ -1,12 +1,16 @@
-const User = require('../models/user');
+const User = require('../models/user'),
+passport   = require('passport')
 
 function createUser (req,res){
-    User.create(req.body,(error,user)=>{
+    let newUser = new User({username:req.body.username});
+    User.register(newUser,req.body.password,(error,user)=>{
         if(error){
             console.log(error);
             return res.redirect('/auth/register')
         }
-        res.redirect('/');
+        passport.authenticate('local')(req,res,()=>{
+            res.redirect('/');
+        })
     })
 }
 

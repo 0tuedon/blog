@@ -2,26 +2,33 @@
     <!-- Navigation -->
    
     <!-- Page Header -->
+    <% if (!post.image) { %>
+     
+    <% } else { %>
     <header class="masthead" style="background-image: url('<%=post.image%>')">
+      <%}%>
       <div class="overlay"></div>
       <div class="container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
-         
               <div class="post-heading">
+                <span class="meta">
+                  <a href="/post/<%= post.id %>/edit"> Edit</a>
+                </span>
+                <form action="/post/<%= post.id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-outline-light btn-sm">Delete</button>
+                </form>
                 <h1><%= post.title %> </h1>
                 <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
                 <span class="meta">Posted by
                   <a href="#"><%=post.username%> </a> on
-                  <%=post.date.toLocaleDateString()  %> at <%= post.date.toLocaleTimeString() %> </span>
+                  <%=post.date.toLocaleDateString()  %> at <%= post.date.toLocaleTimeString() %></span>
               </div>
-            <
-            
           </div>
         </div>
       </div>
     </header>
-
+    
     <!-- Post Content -->
     <article>
       <div class="container">

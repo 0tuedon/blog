@@ -14,7 +14,7 @@
     </header>
 
     <!-- Main Content -->
-    <div class="container">
+    <div id="mainContent" class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
             <% posts.forEach(post => { %>
@@ -35,18 +35,21 @@
                             </div>
                         <% } else { %>
                        on
+                       <% if (!post.date) { %>
+                        
+                       <% }else{%>
                       <%=post.date.toLocaleDateString()  %> at <%= post.date.toLocaleTimeString() %>  </p>
+                      <%}%>
                   </div>
                   <% } %> 
                   
                   <hr>
                   <%})%>
-            
-         
-         
+                  <div class="extra-content col-lg-8 col-md-10 mx-auto" id="extra"></div>
+
           <!-- Pager -->
           <div class="clearfix">
-            <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+            <button id="ajaxGetReq" type="submit" onclick="ajaxGetReq" class="btn btn-primary float-right">Older Posts &rarr;</button>
           </div>
         </div>
       </div>

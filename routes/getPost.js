@@ -1,11 +1,4 @@
-const       Post        =       require('../models/post');
+const       Post        =       require('../models/post'),
+            homepage    =       require('./homePage');
 
-async function getPost (req,res){
-    const posts = await Post.find({})
-    res.render('index', {
-        posts
-    })
-}
-
-
-module.exports = getPost;
+module.exports = homepage;

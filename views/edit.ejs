@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="page-heading">
-            <h1>Create New Post</h1>
+            <h1>Edit <%= post.username %>'s Post</h1>
           </div>
         </div>
       </div>
@@ -16,39 +16,39 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">
-        <form action="/post/store" method="POST" enctype="multipart/form-data" >
+        <form action="/post/<%=post.id%>/?_method=PUT"  method="POST" enctype="multipart/form-data" >
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Title</label>
-              <input type="text" name="title" placeholder="Title" class="form-control">
+              <input type="text" name="title" placeholder="Title" class="form-control" value="<%= post.title %> ">
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Description</label>
-              <input type="text" name="description" placeholder="Description" class="form-control">
+              <input type="text" name="description" placeholder="Description" class="form-control" value="<%= post.description %> ">
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username</label>
-              <input type="text" name="username" placeholder="Username" class="form-control">
+              <input type="text" name="username" placeholder="Username" class="form-control" value="<%= post.username %> ">
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Content</label>
-              <textarea name="content" placeholder="Content ..." cols="30" rows="10" class="form-control"></textarea>
+              <textarea name="content" placeholder="Content ..." cols="30" rows="10" class="form-control"><%=post.content%> </textarea>
             </div>
           </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Image</label>
-              <input type="file" accept="image/*" name="image" placeholder="Upload Image" class="form-control-file" required>
+              <input type="file" accept="image/*" name="image" placeholder="Upload Image" class="form-control-file" value="<%=post.image%> " required>
             </div>
           </div>
           <div class="form-group my-4 text-center">
-            <button class="btn btn-primary">Create Post</button>
+            <button class="btn btn-primary">Edit Post</button>
           </div>
         </form>
       </div>
