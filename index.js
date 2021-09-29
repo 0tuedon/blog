@@ -25,7 +25,7 @@ const   path                        =   require('path'),
         port                        =   process.env.PORT
 
 // Connection of Mongoose to the server
-let         severMongoose           =    'mongodb://localhost/emutBlog'
+let         severMongoose           =    process.env.DATABASE
 mongoose.connect(severMongoose, {useNewUrlParser:true})
     .then(()=> 'You are Now Connected to Mongo')
     .catch(err=> console.error('There was an Error SomeWhere' , err))
