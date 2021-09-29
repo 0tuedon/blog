@@ -9,7 +9,7 @@ function homePage (req,res){
             res.render('index',{posts:result})
            
         }
-    }).limit(5)
+    }).limit(2)
    
 
 }

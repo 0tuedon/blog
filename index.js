@@ -6,6 +6,7 @@ const   path                        =   require('path'),
         cloudinary                  =   require('cloudinary').v2,
         express                     =   require('express'),
         mongoose                    =   require('mongoose'),
+        mongoosePaginate            =   require('mongoose-paginate-v2'),
         passport                    =   require('passport'),
         passportLocal               =   require('passport-local'),
         passportLocalMongoose       =   require('passport-local-mongoose'),
@@ -24,7 +25,7 @@ const   path                        =   require('path'),
         port                        =   process.env.PORT
 
 // Connection of Mongoose to the server
-let         severMongoose           =    process.env.DATABASE
+let         severMongoose           =    'mongodb://localhost/emutBlog'
 mongoose.connect(severMongoose, {useNewUrlParser:true})
     .then(()=> 'You are Now Connected to Mongo')
     .catch(err=> console.error('There was an Error SomeWhere' , err))
@@ -80,15 +81,15 @@ app.post('/users/login',loginUserRoute);
 // API CALLING
 
 app.get('/1234567890Jsonfile',(req,res)=>{
-    let posts = Post.find({},(error,data)=>{
-        let     page        =       2,
-                setLimit    =       5,
-                startIndex  =       (page-1)*setLimit
-                endIndex    =       page*setLimit,
-                results      =       data.slice(startIndex,endIndex)
-
-            res.send(results)
+let page =  parseInt(req.query.page),
+    limit = 2 * page
+    offset= 2
+    Post.paginate({},{
+        offset:offset,limit:limit,sort:[['date',-1]]},(err,result)=>{
+          res.send({results:result.docs})
     })
+       
+   
 })
 
 

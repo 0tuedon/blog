@@ -1,4 +1,5 @@
 const   mongoose                =   require('mongoose'),
+        mongoosePaginate        =   require('mongoose-paginate-v2');
 
         PostSchema              =   new mongoose.Schema({
             title: String,
@@ -10,10 +11,16 @@ const   mongoose                =   require('mongoose'),
             createdBy:String,
             likes:Number,
             comment:String,
-        }),
+        });
+
+
+        PostSchema.plugin(mongoosePaginate);
 
         Post                    =   mongoose.model('Post',PostSchema);
 
+        // Post.paginate(query,options)
+        //     .then(result =>{})
+        //     .catch(error=>{})
 
         module.exports          =   Post;
 
