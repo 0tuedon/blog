@@ -3,7 +3,12 @@ const   mongoose  =   require('mongoose'),
             firstName:String,
             lastName:String,
             DOB:{type:Date},
-            email:String
+            email:String,
+            username:{
+                type:String,
+                unique:true,
+                lowercase:true
+            }
             
         });
 

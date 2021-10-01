@@ -4,7 +4,11 @@ const   bcrypt      =   require('bcrypt'),
         mongoose    =   require('mongoose'),
         passportLocalMongoose = require('passport-local-mongoose'),
         UserSchema  =   new mongoose.Schema({
-            username:String,
+            username:{
+                type:String,
+                lowercase:true,
+                unique:true
+            },
             userProfile:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'UserProfile'

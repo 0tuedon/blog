@@ -18,6 +18,7 @@ const   path                        =   require('path'),
         fileUpload                  =   require('express-fileupload'),
         auth                        =   require('./middleware/auth'),
         storePost                   =   require('./middleware/storePost'),
+        authorizeUser               =   require('./middleware/authorization'),
         expressSession              =   require('express-session'),
         MongoStore                  =   require('connect-mongo'),
         request                     =   require('request'),
@@ -30,6 +31,7 @@ let         severMongoose           =    process.env.DATABASE
 mongoose.connect(severMongoose, {useNewUrlParser:true})
     .then(()=> 'You are Now Connected to Mongo')
     .catch(err=> console.error('There was an Error SomeWhere' , err))
+
 
 app.use(express.static('public'))
 app.set('view engine','ejs');
@@ -45,6 +47,7 @@ app.use(expressSession({
     saveUninitialized:false,
     cookie: {maxAge: 60*60*1000}
 }))
+
 // PASSPORT CONFIGURATION 
 app.use(passport.initialize());
 app.use(passport.session())
@@ -52,6 +55,10 @@ passport.use(new passportLocal(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser())
+app.use((req,res,next)=>{
+    res.locals.userDetails = req.user;
+    next();
+})
 app.use(fileUpload());
 
 // Routes
@@ -68,21 +75,23 @@ const   createPostRoute         =   require('./routes/createPost'),
         deletePostRoute         =   require('./routes/deletePost'),
         createNewCommentRoute   =   require('./routes/createNewComment'),
         contactMessageRoute     =   require('./routes/contactmessage'),
-        logoutRoute             =   require('./routes/logoutRoute')
+        logoutRoute             =   require('./routes/logoutRoute'),
+        userDashBoardRoute      =   require('./routes/userDashboard');
 
 
 app.get('/',homePageRoute);
-app.get('/post/new',createPostRoute);
+app.get('/post/new', authorizeUser,createPostRoute);
 app.get('/post',auth,getPostRoute);
 app.get('/auth/register',registerRoute);
 app.get('/login',getLoginUserRoute)
 app.get('/post/:id/edit', getEditForm);
-app.get('/logout',logoutRoute)
+app.get('/logout',logoutRoute);
+app.get('/dashboard/:id',userDashBoardRoute)
 app.put('/post/:id',editRoute);
 app.delete('/post/:id', deletePostRoute);
 app.post('/users/register',storeUserRoute);
 app.post('/contact/message',contactMessageRoute)
-app.post('/post/store', storePostRoute);
+app.post('/post/store',authorizeUser, storePostRoute);
 app.post('/users/login',loginUser,(req,res)=>{});
 app.post('/post/:id/comment',auth,createNewCommentRoute);
 
