@@ -5,7 +5,7 @@ const  mongoose     =   require('mongoose');
             res.redirect('/login')
         }
         else{
-            if(req.user.username == 'Mofe'  || req.user.username == 'Admin'){
+            if(req.user.username == 'mofe'  || req.user.username == 'Admin'){
                 next();
             }
             else{

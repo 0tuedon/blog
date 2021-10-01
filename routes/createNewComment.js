@@ -5,12 +5,10 @@ const       mongoose        =   require('mongoose'),
 
     function addNewComment(req,res){    
         let id = req.params.id
-        console.log(req.body)
-        let newComment = req.body.comment
-        console.log(newComment)
-
+        
+        let newComment = {message:req.body.message, username:req.user.username}
+            
         Post.findById(id,(err,found)=>{
-            console.log(found)
             Comment.create(newComment,(err,commentCreated)=>{
                 if(err){
     
@@ -18,8 +16,6 @@ const       mongoose        =   require('mongoose'),
                 else{
                     found.comment.push(commentCreated);
                     found.save()
-                    console.log(found)
-                    console.log(commentCreated);
                     res.redirect('/post/'+id);
                 }
             })

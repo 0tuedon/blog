@@ -13,9 +13,9 @@ const   mongoose                =   require('mongoose'),
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Comment'
             }],
-            user:{
-                type:mongoose.Schema.Types.ObjectId,
-                ref:'User'
+            username:{
+                type:String,
+                lowercase:true
             }
         });
 

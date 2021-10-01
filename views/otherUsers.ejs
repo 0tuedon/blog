@@ -13,24 +13,17 @@
                 <div class="p-3 bg-black text-white">
                     <h6 class="text-center">Student</h6>
                 </div>
-                <a href="/logout" class="btn btn-sm btm-light">Logout</a>
+                <div class="flex-column text-dark ">
+                   <p><%=profile.lastName%> has made <%=user.posts.length%> Posts</p>
+                    </div>
+                   <% if(user.posts.length > 3){%>
 
+                    <%} else {%>
+
+                    <%}%>
                 </div>
             </div>
         </div>
-        <div class="flex-column text-dark ">
-            <p>You have made <%=user.posts.length%> Posts</p>
-             </div>
-            <% if(user.posts.length > 3){%>
-
-             <%} else {%>
-
-             <%}%>
-
-             <% if (userDetails.username == 'mofe') { %>
-                 <a href="/post/new" class="btn btn-sm btm-light">Add New Post</a>
-             <% } %>
-             
     </div>
 </div>
 <style>

@@ -1,4 +1,6 @@
-const Post = require('../models/post');
+const Post = require('../models/post'),
+        User = require('../models/user');
+const user = require('../models/user');
 function homePage (req,res){
     res.locals.userDetails = req.user
     Post.find({},null,{sort:{date:-1}},(err,result)=>{
@@ -6,8 +8,10 @@ function homePage (req,res){
 
         }
         else{   
-            console.log(req.user)
-            res.render('index',{posts:result})
+         
+          
+           res.render('index',{posts:result})
+            
            
         }
     }).limit(2)

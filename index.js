@@ -76,6 +76,7 @@ const   createPostRoute         =   require('./routes/createPost'),
         createNewCommentRoute   =   require('./routes/createNewComment'),
         contactMessageRoute     =   require('./routes/contactmessage'),
         logoutRoute             =   require('./routes/logoutRoute'),
+        searchedUser            =   require('./routes/searchedUser'),
         userDashBoardRoute      =   require('./routes/userDashboard');
 
 
@@ -87,6 +88,7 @@ app.get('/login',getLoginUserRoute)
 app.get('/post/:id/edit', getEditForm);
 app.get('/logout',logoutRoute);
 app.get('/dashboard/:id',userDashBoardRoute)
+app.get('/user/:id',searchedUser)
 app.put('/post/:id',editRoute);
 app.delete('/post/:id', deletePostRoute);
 app.post('/users/register',storeUserRoute);
@@ -124,8 +126,9 @@ app.get('/post',(req,res)=>{
 app.get('/post/:id', async (req,res)=>{
     var id = req.params.id
     const post = await Post.findById(id).populate('comment').exec()
+    const user = await User.find({username:post.username})
     res.render('post',{
-        post
+        post,user
     });
 })
 app.listen(port,()=>{
