@@ -37,9 +37,36 @@
            <%- post.content %> 
           </div>
         </div>
+        <hr>
+        <div>
+          Hello Comment Here
+          <i class="fa fa-comment" aria-hidden="true"></i>
+        </div>
       </div>
+
     </article>
 
-    <hr>
-
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 offset-md-2">
+          <form action="/post/<%=post.id%>/comment" method="post">
+            <div class="container">
+              <div class="control-group ">
+                <div class="form-group floating-label-form-group controls border-left-2 border-dark border-3">
+                  <label>Message</label>
+                  <textarea rows="5" name="comment[message]" class="form-control " placeholder="Comment Here ...." id="message" required data-validation-required-message="Please enter a message."></textarea>
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="form-group my-4 text-center">
+                <%console.log(post.comment)%> 
+                <button class="btn btn-primary">Add Comment</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+          
+    
     <%- include('layouts/footer.ejs') %> 

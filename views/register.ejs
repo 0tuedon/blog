@@ -21,16 +21,35 @@
         <form action="/users/register" method="POST" encType="multipart/form-data">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
+              <label>FirstName</label>
+              <input type="text" name="firstName" placeholder="Firstname" class="form-control">
+            </div>
+          </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>LastName</label>
+                <input type="text" name="lastName" placeholder="Lastname" class="form-control">
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Date of Birth</label>
+                <input type="date" name="DOB" data-provide='datepicker' placeholder="Date Of Birth" class="form-control">
+              </div>
+            </div>
+            <div class="control-group">
+              <div class="form-group floating-label-form-group controls">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Email" class="form-control">
+              </div>
+            </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
               <label>Username</label>
               <input type="text" name="username" placeholder="Username" class="form-control">
             </div>
           </div>
-          <div class="control-group">
-            <div class="form-group floating-label-form-group controls">
-              <label>Email</label>
-              <input type="email" name="email" placeholder="Email" class="form-control">
-            </div>
-          </div>
+          
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Password</label>

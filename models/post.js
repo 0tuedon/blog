@@ -6,11 +6,17 @@ const   mongoose                =   require('mongoose'),
             description:String,
             content:String,
             date:{type:Date, default:Date.now},
-            username:String,
             image:String,
             createdBy:String,
             likes:Number,
-            comment:String,
+            comment:[{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Comment'
+            }],
+            user:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User'
+            }
         });
 
 

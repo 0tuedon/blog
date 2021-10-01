@@ -1,12 +1,19 @@
-const { unique } = require('jquery');
+
 
 const   bcrypt      =   require('bcrypt'),
         mongoose    =   require('mongoose'),
         passportLocalMongoose = require('passport-local-mongoose'),
         UserSchema  =   new mongoose.Schema({
             username:String,
-            email:String,
-            joined:String
+            userProfile:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'UserProfile'
+            },
+            posts:[{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Post'
+            }]
+            
         })
         UserSchema.plugin(passportLocalMongoose)
 

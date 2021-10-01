@@ -4,13 +4,12 @@ function homePage (req,res){
         if(err){
 
         }
-        else{
-
+        else{   
             res.render('index',{posts:result})
            
         }
     }).limit(2)
-   
+
 
 }
 

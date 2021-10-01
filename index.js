@@ -14,14 +14,15 @@ const   path                        =   require('path'),
         methodOverride              =   require('method-override'),
         Post                        =   require('./models/post'),
         User                        =   require('./models/user'),
+        Comment                     =   require('./models/comment'),
         fileUpload                  =   require('express-fileupload'),
         auth                        =   require('./middleware/auth'),
         storePost                   =   require('./middleware/storePost'),
         expressSession              =   require('express-session'),
         MongoStore                  =   require('connect-mongo'),
         request                     =   require('request'),
+        connectEnsureLogin          =   require('connect-ensure-login'),
         app                         =   express(),
-
         port                        =   process.env.PORT
 
 // Connection of Mongoose to the server
@@ -41,12 +42,14 @@ app.use(methodOverride('_method'));
 app.use(expressSession({
     secret:'jnjrefnj',
     resave:false,
-    saveUninitialized:false
+    saveUninitialized:false,
+    cookie: {maxAge: 60*60*1000}
 }))
 // PASSPORT CONFIGURATION 
 app.use(passport.initialize());
 app.use(passport.session())
-passport.use(new passportLocal(User.authenticate()))
+passport.use(new passportLocal(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser())
 app.use(fileUpload());
@@ -58,26 +61,35 @@ const   createPostRoute         =   require('./routes/createPost'),
         storePostRoute          =   require('./routes/storePost'),
         registerRoute           =   require('./routes/register'),
         storeUserRoute          =   require('./routes/createUser'),
-        loginUserRoute          =   require('./routes/loginUser'),
+        loginUser               =   require('./routes/loginUser'),
         getLoginUserRoute       =   require('./routes/getLoginUser'),
         getEditForm             =   require('./routes/getEditForm'),
         editRoute               =   require('./routes/editRoute'),
-        deletePostRoute         =   require('./routes/deletePost');
+        deletePostRoute         =   require('./routes/deletePost'),
+        createNewCommentRoute   =   require('./routes/createNewComment'),
+        contactMessageRoute     =   require('./routes/contactmessage'),
+        logoutRoute             =   require('./routes/logoutRoute')
 
 
 app.get('/',homePageRoute);
 app.get('/post/new',createPostRoute);
 app.get('/post',auth,getPostRoute);
 app.get('/auth/register',registerRoute);
-app.get('/auth/login',getLoginUserRoute)
+app.get('/login',getLoginUserRoute)
 app.get('/post/:id/edit', getEditForm);
+app.get('/logout',logoutRoute)
 app.put('/post/:id',editRoute);
 app.delete('/post/:id', deletePostRoute);
 app.post('/users/register',storeUserRoute);
+app.post('/contact/message',contactMessageRoute)
 app.post('/post/store', storePostRoute);
-app.post('/users/login',loginUserRoute);
+app.post('/users/login',loginUser,(req,res)=>{});
+app.post('/post/:id/comment',auth,createNewCommentRoute);
 
-
+//  Test to Ensure login 
+app.get('/testlogin',connectEnsureLogin.ensureLoggedIn(),(req,res)=>{
+    res.send(`Hello ${req.user.username}. Your cookie session id is ${req.sessionID} expires in ${req.session.cookie.maxAge}`)
+})
 // API CALLING
 
 app.get('/1234567890Jsonfile',(req,res)=>{
@@ -88,11 +100,7 @@ let page =  parseInt(req.query.page),
         offset:offset,limit:limit,sort:[['date',-1]]},(err,result)=>{
           res.send({results:result.docs})
     })
-       
-   
 })
-
-
 app.get('/about', (req,res)=>{
     res.render('about');
 });
@@ -106,7 +114,7 @@ app.get('/post',(req,res)=>{
 });
 app.get('/post/:id', async (req,res)=>{
     var id = req.params.id
-    const post = await Post.findById(id)
+    const post = await Post.findById(id).populate('comment').exec()
     res.render('post',{
         post
     });
