@@ -1,17 +1,12 @@
 require('dotenv').config();
 
-const   path                        =   require('path'),
-        expressEdge                 =   require('express-edge'),
-        { MongoClient }             =   require('mongodb'),
-        cloudinary                  =   require('cloudinary').v2,
-        express                     =   require('express'),
+const   express                     =   require('express'),
         mongoose                    =   require('mongoose'),
-        mongoosePaginate            =   require('mongoose-paginate-v2'),
         passport                    =   require('passport'),
         passportLocal               =   require('passport-local'),
-        passportLocalMongoose       =   require('passport-local-mongoose'),
         bodyParser                  =   require('body-parser'),
         methodOverride              =   require('method-override'),
+        cookie                      =   require('cookie-parser'),
         Post                        =   require('./models/post'),
         User                        =   require('./models/user'),
         fileUpload                  =   require('express-fileupload'),
@@ -21,6 +16,7 @@ const   path                        =   require('path'),
         app                         =   express(),
         port                        =   process.env.PORT
 
+        const loginRequired             =   require('./config/jWTConfig');
 // Connection of Mongoose to the server
 let         severMongoose           =    process.env.DATABASE
 mongoose.connect(severMongoose, {useNewUrlParser:true})
@@ -29,6 +25,8 @@ mongoose.connect(severMongoose, {useNewUrlParser:true})
 
 
 app.use(express.static('public'))
+app.use(cookie())
+app.use(express.json());
 app.set('view engine','ejs');
 app.use(bodyParser.json())
 
@@ -56,6 +54,7 @@ app.use((req,res,next)=>{
 })
 app.use(fileUpload());
 
+;
 // Routes
 const   createPostRoute         =   require('./routes/createPost'),
         getPostRoute            =   require('./routes/getPost'),
@@ -74,6 +73,7 @@ const   createPostRoute         =   require('./routes/createPost'),
         searchedUser            =   require('./routes/searchedUser'),
         userDashBoardRoute      =   require('./routes/userDashboard'),
         postLikeRoute           =   require('./routes/likePost');
+const verifyEmail = require('./routes/verify-user');
 
 
 app.get('/',homePageRoute);
@@ -83,8 +83,9 @@ app.get('/auth/register',registerRoute);
 app.get('/login',getLoginUserRoute)
 app.get('/post/:id/edit', getEditForm);
 app.get('/logout',logoutRoute);
-app.get('/dashboard/:id',userDashBoardRoute)
-app.get('/user/:id',searchedUser)
+app.get('/dashboard/:id',loginRequired, userDashBoardRoute)
+// app.get('/user/:id',searchedUser)
+app.get('/user/verify-email',verifyEmail)
 app.put('/post/:id',editRoute);
 app.delete('/post/:id', deletePostRoute);
 app.post('/users/register',storeUserRoute);

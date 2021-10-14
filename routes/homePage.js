@@ -8,7 +8,7 @@ function homePage (req,res){
 
         }
         else{   
-         
+         console.log(req.user)
           
            res.render('index',{posts:result})
             

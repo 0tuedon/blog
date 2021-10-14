@@ -9,7 +9,26 @@ const   bcrypt      =   require('bcrypt'),
                 lowercase:true,
                 unique:true
             },
-            password:String,
+            email:{
+                type:String,
+                unique:true,
+                required:true
+            },
+            emailToken:{
+                type:String
+        
+            },
+            isVerified:{
+                type:Boolean
+            },
+            date:{
+                type:Date,
+                default:Date.no
+            },
+            password:{
+                type:String,
+                required:true
+            },
             userProfile:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'UserProfile'

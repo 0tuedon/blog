@@ -2,6 +2,8 @@ const mongoose = require('mongoose'),
         User    =   require('../models/user'),
         UserProfile = require('../models/userprofile');
 
+       
+
 function findUserDetails(req,res){
     var id = req.params.id
     User.findById(id,(err,found)=>{

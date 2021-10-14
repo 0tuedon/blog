@@ -8,17 +8,12 @@ function findUserDetails(req,res){
         if(err){
 
         }
-        else{
-            
-        
+        else{  
         UserProfile.find({username:found.username},(err,foundOne)=>{
             if(err){
 
             }
-            else{
-            
-              
-                
+            else{  
               return  res.render('otherUsers.ejs',{profile:foundOne[0],user:found})
             }
           
