@@ -5,8 +5,11 @@ const           Post            =   require('../models/post'),
 function editRoute (req,res){
     let id = req.params.id,
         newBlog =   req.body
+    
     Post.findByIdAndUpdate(id,newBlog,(err,updated)=>{
         try{
+            console.log(newBlog)
+            console.log(updated);
             res.redirect('/post/'+id)
         }
         catch(error){

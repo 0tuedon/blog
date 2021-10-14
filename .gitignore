@@ -1,8 +1,6 @@
 #Node_Modules Directory Not Neccessary
 node_modules/
 
-#Package-lock file Not Necessary
-package-lock.json
 
 
 #App.edge 
@@ -10,3 +8,5 @@ package-lock.json
 app.edge
 #Ignore .env file
 .env
+
+.idea/

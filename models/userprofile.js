@@ -8,7 +8,8 @@ const   mongoose  =   require('mongoose'),
                 type:String,
                 unique:true,
                 lowercase:true
-            }
+            },
+            likeSchema:[{type:mongoose.Schema.Types.ObjectId, ref:'Like'}]
             
         });
 

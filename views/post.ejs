@@ -43,7 +43,24 @@
           </div>
         </div>
         <hr>
-        
+        <div class=" row">
+          <div class="col-md-3">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <button id="likeButton" type="button" class="btn mb-2 mb-md-0 btn-outline-primary btn-block"><span>Like</span>
+                <i class="fa fa-heart" aria-hidden="true"></i>
+                </button>
+              </div>
+          </div> 
+          <div class="col-md-3">
+            
+              <div class="icon d-flex align-items-center justify-content-center">
+                <button id="shareButton" type="button" class="btn mb-2 mb-md-0 btn-outline-primary btn-block"><span>Share</span>
+                <i class="fa fa-share o" aria-hidden="true"></i>
+              </button>
+              </div>
+            
+          </div>
+        </div>
       </div>
 
     </article>
@@ -57,10 +74,13 @@
                 <div class="card-body">
                   <h6 class="card-title"><%=comm.username.toUpperCase()%></h6>
                   <p class="card-text text-dark"><%=comm.message%></p>
+        
                 </div>
               </div>
           </div>
-        </div>   
+        </div>  
+       
+        
       <% }) %>
     </div>
     <div class="container">
@@ -85,5 +105,6 @@
       </div>
     </div>
           
-    
+    <!--Id for the Post  -->
+    <div id="postId"><p><%= post.id%></p></div>
     <%- include('layouts/footer.ejs') %> 

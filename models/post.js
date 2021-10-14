@@ -8,10 +8,14 @@ const   mongoose                =   require('mongoose'),
             date:{type:Date, default:Date.now},
             image:String,
             createdBy:String,
-            likes:Number,
+            likes:{type:Number,default:0},
             comment:[{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Comment'
+            }],
+            User:[{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User'
             }],
             username:{
                 type:String,

@@ -9,6 +9,7 @@ const   bcrypt      =   require('bcrypt'),
                 lowercase:true,
                 unique:true
             },
+            password:String,
             userProfile:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'UserProfile'

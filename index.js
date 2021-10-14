@@ -14,15 +14,10 @@ const   path                        =   require('path'),
         methodOverride              =   require('method-override'),
         Post                        =   require('./models/post'),
         User                        =   require('./models/user'),
-        Comment                     =   require('./models/comment'),
         fileUpload                  =   require('express-fileupload'),
         auth                        =   require('./middleware/auth'),
-        storePost                   =   require('./middleware/storePost'),
         authorizeUser               =   require('./middleware/authorization'),
         expressSession              =   require('express-session'),
-        MongoStore                  =   require('connect-mongo'),
-        request                     =   require('request'),
-        connectEnsureLogin          =   require('connect-ensure-login'),
         app                         =   express(),
         port                        =   process.env.PORT
 
@@ -77,7 +72,8 @@ const   createPostRoute         =   require('./routes/createPost'),
         contactMessageRoute     =   require('./routes/contactmessage'),
         logoutRoute             =   require('./routes/logoutRoute'),
         searchedUser            =   require('./routes/searchedUser'),
-        userDashBoardRoute      =   require('./routes/userDashboard');
+        userDashBoardRoute      =   require('./routes/userDashboard'),
+        postLikeRoute           =   require('./routes/likePost');
 
 
 app.get('/',homePageRoute);
@@ -96,21 +92,20 @@ app.post('/contact/message',contactMessageRoute)
 app.post('/post/store',authorizeUser, storePostRoute);
 app.post('/users/login',loginUser,(req,res)=>{});
 app.post('/post/:id/comment',auth,createNewCommentRoute);
+app.post('/post/like', postLikeRoute);
 
-//  Test to Ensure login 
-app.get('/testlogin',connectEnsureLogin.ensureLoggedIn(),(req,res)=>{
-    res.send(`Hello ${req.user.username}. Your cookie session id is ${req.sessionID} expires in ${req.session.cookie.maxAge}`)
-})
+
 // API CALLING
 
 app.get('/1234567890Jsonfile',(req,res)=>{
-let page =  parseInt(req.query.page),
+let page =  parseInt(req.query.currentPage),
     limit = 2 * page
     offset= 2
     Post.paginate({},{
         offset:offset,limit:limit,sort:[['date',-1]]},(err,result)=>{
           res.send({results:result.docs})
     })
+    console.log(req.query.currentPage);
 })
 app.get('/about', (req,res)=>{
     res.render('about');
@@ -133,4 +128,5 @@ app.get('/post/:id', async (req,res)=>{
 })
 app.listen(port,()=>{
     console.log('App Listening on port ' + port);
+    console.log("App Listening Port ");
 })
