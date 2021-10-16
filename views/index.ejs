@@ -1,16 +1,4 @@
 <%-include('layouts/header.ejs') %>
-<% if (success.length > 0) { %>
-  <div class="alert bg-danger text-center alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong><%=success%></strong> 
-  </div>
-  
-  <script>
-    $(".alert").alert();
-  </script> 
-<% } %>    
 <!-- Page Header -->
     <header class="masthead" style="background-image: url('img/home-bg.jpg')">
       <div class="overlay"></div>
