@@ -86,7 +86,7 @@ app.get('/login',getLoginUserRoute)
 app.get('/post/:id/edit', getEditForm);
 app.get('/logout',logoutRoute);
 app.get('/dashboard/:id',authorizeUser, userDashBoardRoute)
-app.get('/user/:id',searchedUser)
+// app.get('/user/:id',searchedUser)
 app.get('/user/verify-email',verifyEmail)
 app.put('/post/:id',editRoute);
 app.delete('/post/:id', deletePostRoute);

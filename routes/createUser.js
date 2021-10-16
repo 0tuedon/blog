@@ -40,7 +40,7 @@ var transporter  = nodemailer.createTransport({
                         to:user.email,
                         subject:`Join EmutBlog Newsletter -Verify Your Email`,
                         html: `<h2> Hello ${user.username.toUpperCase()}</h2>
-                                <p>You registered an account on <a href="http://emutblog.herokuapp.com/">EmutBlog</a></p>
+                                <p>You registered an account on EmutBlog</p>
                                 <div>
                                 <p> before being able to use your account you need to verify that this is your email address by clicking
                                 <a href="http://${req.headers.host}/user/verify-email?token=${user.emailToken}">

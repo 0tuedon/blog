@@ -14,13 +14,10 @@ try{
         user.save();
         res.render("emailverified");
     }
-    else{
-        res.redirect('/users/register')
-      
-    } 
 }
 catch {
-
+    req.flash("error","Could not Verify User");
+    res.redirect("/");
 } 
 }
 
