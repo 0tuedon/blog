@@ -10,13 +10,12 @@ const   express                     =   require('express'),
         Post                        =   require('./models/post'),
         User                        =   require('./models/user'),
         fileUpload                  =   require('express-fileupload'),
+        flash                       =   require('connect-flash'),
         auth                        =   require('./middleware/auth'),
         authorizeUser               =   require('./middleware/authorization'),
         expressSession              =   require('express-session'),
         app                         =   express(),
         port                        =   process.env.PORT
-
-        const loginRequired             =   require('./config/jWTConfig');
 // Connection of Mongoose to the server
 let         severMongoose           =    process.env.DATABASE
 mongoose.connect(severMongoose, {useNewUrlParser:true})
@@ -29,7 +28,7 @@ app.use(cookie())
 app.use(express.json());
 app.set('view engine','ejs');
 app.use(bodyParser.json())
-
+app.use(flash());
 app.use(bodyParser.urlencoded({
     extended:true
 }));
@@ -43,13 +42,16 @@ app.use(expressSession({
 
 // PASSPORT CONFIGURATION 
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
+
 passport.use(new passportLocal(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser())
 app.use((req,res,next)=>{
     res.locals.userDetails = req.user;
+    res.locals.success =req.flash('success')
+    res.locals.error  = req.flash('error');
     next();
 })
 app.use(fileUpload());
@@ -83,8 +85,8 @@ app.get('/auth/register',registerRoute);
 app.get('/login',getLoginUserRoute)
 app.get('/post/:id/edit', getEditForm);
 app.get('/logout',logoutRoute);
-app.get('/dashboard/:id',loginRequired, userDashBoardRoute)
-// app.get('/user/:id',searchedUser)
+app.get('/dashboard/:id',authorizeUser, userDashBoardRoute)
+app.get('/user/:id',searchedUser)
 app.get('/user/verify-email',verifyEmail)
 app.put('/post/:id',editRoute);
 app.delete('/post/:id', deletePostRoute);
@@ -97,7 +99,6 @@ app.post('/post/like', postLikeRoute);
 
 
 // API CALLING
-
 app.get('/1234567890Jsonfile',(req,res)=>{
 let page =  parseInt(req.query.currentPage),
     limit = 2 * page
@@ -106,7 +107,6 @@ let page =  parseInt(req.query.currentPage),
         offset:offset,limit:limit,sort:[['date',-1]]},(err,result)=>{
           res.send({results:result.docs})
     })
-    console.log(req.query.currentPage);
 })
 app.get('/about', (req,res)=>{
     res.render('about');
@@ -120,12 +120,21 @@ app.get('/post',(req,res)=>{
     res.render('index.js');
 });
 app.get('/post/:id', async (req,res)=>{
-    var id = req.params.id
-    const post = await Post.findById(id).populate('comment').exec()
-    const user = await User.find({username:post.username})
-    res.render('post',{
-        post,user
-    });
+    console.log(res.statusCode)
+    try{
+        let id = req.params.id
+        const post = await Post.findById(id).populate('comment').exec();
+        const user = await User.find({username:post.username})
+    }
+    catch(e){
+        res.render("error");
+    }
+   
+    
+})
+
+app.use('*',(req,res)=>{
+    res.render("error");
 })
 app.listen(port,()=>{
     console.log('App Listening on port ' + port);

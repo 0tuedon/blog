@@ -31,7 +31,7 @@ var transporter  = nodemailer.createTransport({
         })
         User.register(newUser,password,(error,user)=>{
             if(error){
-                console.log(error);
+                req.flash("error",`Unable to Register ${newUser.username}`)
                 return res.redirect('/auth/register')
             }
         // Verification mail

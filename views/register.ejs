@@ -5,16 +5,22 @@
 <header class="masthead">
     <div class="overlay"></div>
     <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="page-heading">
-            <h1>Create A New Account</h1>
-          </div>
-        </div>
+     
       </div>
     </div>
   </header>
-  
+  <% if (error.length > 0) { %>
+    <div class="alert bg-danger text-center alert-dismissible fade show" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong><%=error%></strong> 
+    </div>
+    
+    <script>
+      $(".alert").alert();
+    </script> 
+<% } %>
   <div class="container">
     <div class="row">
       <div class="col-md-8 offset-md-2">

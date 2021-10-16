@@ -18,11 +18,20 @@ app.use(expressSession({
 }))
 async function loginUser(req, res, next) {
     passport.authenticate('local', function(err, user, info) {
-      if (err) { return next(err); }
-      if (!user) { return res.redirect('/login'); }
-      console.log(user);
+      if (err) 
+      { 
+        req.flash("error","Authentication went Wrong")
+        return next(err); }
+      if (!user) { 
+        req.flash("error","Invalid Username or Password")
+        return res.redirect('/login'); }
+
       req.logIn(user, function(err) {
-        if (err) { return next(err); }
+        if (err) { 
+          req.flash("error","Invalid Username or Password");
+          return res.redirect('/login'); }
+
+        req.flash("success",`Succesfully Signed In, Welcome ${req.user.username}`)
         return res.redirect('/');
       });
     })(req, res, next);

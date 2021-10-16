@@ -11,7 +11,8 @@ const       mongoose        =   require('mongoose'),
         Post.findById(id,(err,found)=>{
             Comment.create(newComment,(err,commentCreated)=>{
                 if(err){
-    
+                    req.flash("error","Please Login to Complete this Action")
+                    res.redirect('/post/'+id);
                 }
                 else{
                     found.comment.push(commentCreated);
