@@ -25,11 +25,16 @@ async function loginUser(req, res, next) {
       if (!user) { 
         req.flash("error","Invalid Username or Password")
         return res.redirect('/login'); }
+      if(user.isVerified == false){
+          req.flash("error", "Please verify Your Email")
+          res.redirect("/login");
+        }
 
       req.logIn(user, function(err) {
         if (err) { 
           req.flash("error","Invalid Username or Password");
           return res.redirect('/login'); }
+          
 
         req.flash("success",`Succesfully Signed In, Welcome ${req.user.username}`)
         return res.redirect('/');

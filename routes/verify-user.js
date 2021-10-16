@@ -12,11 +12,11 @@ try{
         user.isVerified = true
         console.log(user);
         user.save();
-        res.redirect('/login')
+        res.render("emailverified");
     }
     else{
         res.redirect('/users/register')
-        console.log('Email is not verified');
+      
     } 
 }
 catch {

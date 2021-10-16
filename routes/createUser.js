@@ -31,7 +31,7 @@ var transporter  = nodemailer.createTransport({
         })
         User.register(newUser,password,(error,user)=>{
             if(error){
-                req.flash("error",`Unable to Register ${newUser.username}`)
+                req.flash("error",`Username already Exist`)
                 return res.redirect('/auth/register')
             }
         // Verification mail
@@ -39,23 +39,29 @@ var transporter  = nodemailer.createTransport({
                         from:`"Verify Your Email" <blogemut@gmail.com>`,
                         to:user.email,
                         subject:`Join EmutBlog Newsletter -Verify Your Email`,
-                        html: `<h2> Hey ${user.username.toUpperCase()}!! Thanks for Creating a new Account with us</h2>
-                                <h4>Please verify your email with us to contimue...</h4>
+                        html: `<h2> Hello ${user.username.toUpperCase()}</h2>
+                                <p>You registered an account on <a href="http://emutblog.herokuapp.com/">EmutBlog</a></p>
+                                <div>
+                                <p> before being able to use your account you need to verify that this is your email address by clicking
                                 <a href="http://${req.headers.host}/user/verify-email?token=${user.emailToken}">
-                                Verify your Email
-                                </a>`
+                                Here
+                                </a>
+                                </p>
+                                `
+                
                     }
                     // Sending the mail
-                transporter.sendMail(mailOptions,(err,info)=>{
-                            err ? console.log(err):console.log("Email Sent")
+               transporter.sendMail(mailOptions,(err,info)=>{
+                            if(err){
+                                res.send("Could not verify user");
+                            }
+                            else{
+                                    return res.render("awaitingverification")
+                            }
+                        })
+
         }   )
-                passport.authenticate('local')(req,res,()=>{
-                        console.log(user);
-                        res.redirect('/');
-                    })
                 
-        res.redirect('/login')
-    })
 
 }catch(e){
         console.log(e)

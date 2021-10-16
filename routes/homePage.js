@@ -5,10 +5,10 @@ function homePage (req,res){
     res.locals.userDetails = req.user
     Post.find({},null,{sort:{date:-1}},(err,result)=>{
         if(err){
-
+            res.render("error");
         }
         else{   
-         console.log(req.user)
+         
           
            res.render('index',{posts:result})
             
