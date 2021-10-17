@@ -43,7 +43,7 @@
           </div>
         </div>
         <hr>
-        <div class=" row">
+        <div class=" row d-flex justify-content-center">
           <div class="col-md-3">
               <div class="icon d-flex align-items-center justify-content-center">
                 <button id="likeButton" type="button" class="btn mb-2 mb-md-0 btn-outline-primary btn-block"><span>Like</span>
@@ -106,5 +106,5 @@
     </div>
           
     <!--Id for the Post  -->
-    <div id="postId"><p><%= post.id%></p></div>
+    <div class="d-none" id="postId"><p><%= post.id%></p></div>
     <%- include('layouts/footer.ejs') %> 

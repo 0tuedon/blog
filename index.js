@@ -125,6 +125,8 @@ app.get('/post/:id', async (req,res)=>{
         let id = req.params.id
         const post = await Post.findById(id).populate('comment').exec();
         const user = await User.find({username:post.username})
+        res.render('post',{
+            post:post,user:user})
     }
     catch(e){
         res.render("error");
