@@ -1,6 +1,4 @@
 <%- include('./layouts/header.ejs') %> 
-
-
 <!-- Page Header -->
 <header class="masthead">
     <div class="overlay"></div>
@@ -28,13 +26,13 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>FirstName</label>
-              <input type="text" name="firstName" placeholder="Firstname" class="form-control">
+              <input type="text" name="firstName" placeholder="Firstname" minlength="3" class="form-control" required>
             </div>
           </div>
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>LastName</label>
-                <input type="text" name="lastName" placeholder="Lastname" class="form-control">
+                <input type="text" name="lastName" minlength="3" placeholder="Lastname" class="form-control" required>
               </div>
             </div>
             <div class="control-group">
@@ -46,20 +44,20 @@
             <div class="control-group">
               <div class="form-group floating-label-form-group controls">
                 <label>Email</label>
-                <input type="email" name="email" placeholder="Email" class="form-control">
+                <input type="email" name="email" placeholder="Email" class="form-control" required>
               </div>
             </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Username</label>
-              <input type="text" name="username" placeholder="Username" class="form-control">
+              <input type="text" name="username" minlength="3" placeholder="Username" class="form-control" required>
             </div>
           </div>
           
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Password</label>
-              <input type="password" name="password" placeholder="Password" class="form-control">
+              <input type="password" name="password"minlength="6" placeholder="Password" class="form-control" required>
             </div>
           </div>
         

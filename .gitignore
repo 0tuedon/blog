@@ -1,7 +1,7 @@
 #Node_Modules Directory Not Neccessary
 node_modules/
 
-
+nodemailer/
 
 #App.edge 
 
