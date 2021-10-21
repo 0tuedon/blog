@@ -5,8 +5,6 @@ const   User = require('../models/user'),
         nodemailer =    require('nodemailer'),
         crypto      =   require('crypto'),
         jwt         =   require('jsonwebtoken'),
-        bcrypt      =   require('bcrypt'),
-        template    =   require('../nodemailer/htmlmailTemp')
         UserProfile  =   require('../models/userprofile');
 var transporter  = nodemailer.createTransport({
     service:'gmail',
